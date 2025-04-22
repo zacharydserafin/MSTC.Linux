@@ -1,0 +1,2 @@
+[webservers]
+172.31.45.179 ansible_user=zserafin

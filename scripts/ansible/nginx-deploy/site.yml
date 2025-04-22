@@ -1,0 +1,27 @@
+---
+- name: Deploy NGINX web server
+  hosts: webservers
+  become: yes
+  vars:
+    my_package: nginx
+
+  tasks:
+    - name: Install NGINX
+      apt:
+        name: "{{ my_package }}"
+        state: present
+        update_cache: yes
+
+    - name: Deploy custom index.html
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: 0644
+
+    - name: Ensure NGINX is running and enabled
+      service:
+        name: "{{ my_package }}"
+        state: started
+        enabled: true
